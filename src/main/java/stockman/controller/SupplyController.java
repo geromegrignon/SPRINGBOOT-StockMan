@@ -1,17 +1,14 @@
 package stockman.controller;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import stockman.modele.Supply;
+import stockman.model.Supply;
 import stockman.repository.SupplyRepository;
 
 @RestController
@@ -27,6 +24,11 @@ public class SupplyController {
 		return repository.findAll();
 	}
 	
+	@GetMapping("/supply/alert")
+	public List<Supply> getOnAlertSupplies() {
+		return repository.findOnAlertSupplies();
+	}
+	
 	@GetMapping("/supply/{id}")
 	public Optional<Supply> getSupplyById(@PathVariable(value = "id") Long supplyId) {
 			return repository.findById(supplyId);
@@ -37,7 +39,7 @@ public class SupplyController {
 		return repository.save(supply);
 	}
 	
-	@PutMapping("supply/{id}")
+	@PutMapping("/supply/{id}")
 	public Supply updateSupply(
 			@PathVariable(value = "id") Long supplyId,
 			@Valid
@@ -50,6 +52,7 @@ public class SupplyController {
 			newSupply.setDescription (supplyResponse.getDescription ());
 			newSupply.setUnitsInStock(supplyResponse.getUnitsInStock());
 			newSupply.setAlertStock(supplyResponse.getAlertStock());
+			newSupply.setOrderRequestList(supplyResponse.getOrderRequestList());
 			return repository.save(newSupply);	
         }
 		

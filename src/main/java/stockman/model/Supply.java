@@ -1,4 +1,4 @@
-package stockman.modele;
+package stockman.model;
 
 import java.io.Serializable;
 import java.util.*;
@@ -36,7 +36,7 @@ public class Supply implements Serializable{
 	
 	@ManyToOne (cascade= CascadeType.ALL)
 	@JoinColumn(name = "provider_id", nullable = false)
-	@JsonBackReference
+	@JsonIgnore
 	private Provider provider;
 	
 	@OneToMany(fetch = FetchType.EAGER,mappedBy="supply",cascade = CascadeType.ALL)

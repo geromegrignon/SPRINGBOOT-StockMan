@@ -1,18 +1,13 @@
-package stockman.modele;
+package stockman.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
-import org.hibernate.annotations.BatchSize;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.*;
@@ -33,6 +28,11 @@ public class Provider implements Serializable{
 	@Column
 	private Long siret;
 	private String name;
+	
+	@OneToOne(fetch = FetchType.LAZY,
+            cascade =  CascadeType.ALL,
+            mappedBy = "provider")
+    private AddressInfo addressInfo;
 	
 	@OneToMany(fetch = FetchType.EAGER,mappedBy="provider",cascade = CascadeType.ALL)
 	private List<Supply> supplyList = new ArrayList<>();

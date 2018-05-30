@@ -1,10 +1,18 @@
 package stockman.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import stockman.modele.Supply;
+import stockman.model.Supply;
+
 
 @Repository
-public interface SupplyRepository extends JpaRepository<Supply, Long>, JpaSpecificationExecutor<Supply>{}
+public interface SupplyRepository extends JpaRepository<Supply, Long>, JpaSpecificationExecutor<Supply>{
+	
+	@Query("SELECT s FROM Supply s WHERE s.unitsInStock < s.alertStock")
+	  List<Supply> findOnAlertSupplies();
+}
