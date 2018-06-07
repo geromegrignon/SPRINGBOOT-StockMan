@@ -1,12 +1,9 @@
 package stockman.model;
 
-import java.io.Serializable;
 import java.sql.Date;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.*;
@@ -16,7 +13,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Status implements Serializable{
+public class Status{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,19 +24,14 @@ public class Status implements Serializable{
 	private Date updatedAt;
 	private String comment;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id", nullable = false)
-	@JsonBackReference(value = "user-status")
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	@JsonIgnoreProperties("requestList")
 	private User user;
-	
-//	@ManyToOne
-//	@JoinColumn(name = "request_id")
-//	@JsonIgnoreProperties(value = "statusList")
-//	private Request request;
 	
 	@ManyToOne
 	@JoinColumn(name = "request_id")
-	@JsonIgnoreProperties(value = "statusList")
+	@JsonIgnoreProperties("statusList")
 	private Request request;
 	
 }

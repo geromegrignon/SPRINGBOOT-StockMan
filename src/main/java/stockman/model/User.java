@@ -3,7 +3,7 @@ package stockman.model;
 import org.hibernate.annotations.NaturalId;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import stockman.model.audit.DateAudit;
 
@@ -66,8 +66,9 @@ public class User extends DateAudit {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
     
-    @OneToMany(fetch = FetchType.EAGER,mappedBy="supply",cascade = CascadeType.MERGE)
-    @JsonManagedReference(value="user-Request")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="request_id", referencedColumnName ="id", nullable = true)
+    @JsonIgnoreProperties("user")
 	private List<Request> requestList = new ArrayList<>();
     
     public User(String name, String username, String email, String password) {
