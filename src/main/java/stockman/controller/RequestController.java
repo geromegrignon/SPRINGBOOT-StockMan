@@ -16,43 +16,44 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import stockman.model.OrderRequest;
-import stockman.repository.OrderRequestRepository;
+import stockman.model.Request;
+import stockman.repository.RequestRepository;
 
 @RestController
 @CrossOrigin
 @RequestMapping("/api")
-public class OrderRequestController {
+public class RequestController {
 	
 	@Autowired
-	OrderRequestRepository repository;
+	RequestRepository repository;
 	
 	@GetMapping("/request")
-	public List<OrderRequest> getAllRequests() {
+	public List<Request> getAllRequests() {
 		return repository.findAll();
 	}
 	
 	@GetMapping("/request/{id}")
-	public Optional<OrderRequest> getRequestById(@PathVariable(value = "id") Long requestId) {
+	public Optional<Request> getRequestById(@PathVariable(value = "id") Long requestId) {
 			return repository.findById(requestId);
 	}
 	
 	@PostMapping("/request")
-	public OrderRequest createRequest(@Valid @RequestBody OrderRequest orderRequest) {
-		return repository.save(orderRequest);
+	public Request createRequest(@Valid @RequestBody Request request) {
+		return repository.save(request);
 	}
 	
 	@PutMapping("/request/{id}")
-	public OrderRequest updateRequest(
+	public Request updateRequest(
 			@PathVariable(value = "id") Long requestId,
 			@Valid
-			@RequestBody OrderRequest requestResponse) {
-		Optional<OrderRequest> request = repository.findById(requestId);
-		OrderRequest newRequest = request.get();
+			@RequestBody Request requestResponse) {
+		Optional<Request> request = repository.findById(requestId);
+		Request newRequest = request.get();
 		if(request.isPresent()) {
 			
 			newRequest.setQuantity(requestResponse.getQuantity() );
 			newRequest.setDeliveryDate(requestResponse.getDeliveryDate());
+			newRequest.setStatusList(requestResponse.getStatusList());
 			newRequest.setSupply(requestResponse.getSupply());
 			newRequest.setUser(requestResponse.getUser());
 			return repository.save(newRequest);	
@@ -64,7 +65,7 @@ public class OrderRequestController {
 	
 	@DeleteMapping("/request/{id}")
 	public void deleteRequest(@PathVariable(value = "id") Long requestId) {
-		Optional<OrderRequest>  request = repository.findById(requestId);
+		Optional<Request>  request = repository.findById(requestId);
 		if(request.isPresent()) {
 			repository.deleteById(requestId);
 		}

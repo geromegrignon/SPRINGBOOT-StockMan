@@ -2,6 +2,9 @@ package stockman.model;
 
 import org.hibernate.annotations.NaturalId;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import stockman.model.audit.DateAudit;
 
 import javax.persistence.*;
@@ -21,7 +24,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "users", uniqueConstraints = {
+@Table(uniqueConstraints = {
         @UniqueConstraint(columnNames = {
             "username"
         }),
@@ -51,6 +54,7 @@ public class User extends DateAudit {
 
     @NotBlank
     @Size(max = 100)
+    @JsonIgnore
     private String password;
     
 //    @Column(nullable = false)
@@ -62,8 +66,9 @@ public class User extends DateAudit {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
     
-    @OneToMany(fetch = FetchType.EAGER,mappedBy="supply",cascade = CascadeType.ALL)
-	private List<OrderRequest> orderRequestList = new ArrayList<>();
+    @OneToMany(fetch = FetchType.EAGER,mappedBy="supply",cascade = CascadeType.MERGE)
+    @JsonManagedReference(value="user-Request")
+	private List<Request> requestList = new ArrayList<>();
     
     public User(String name, String username, String email, String password) {
         this.name = name;

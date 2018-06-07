@@ -1,6 +1,8 @@
 package stockman.controller;
 
 
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import stockman.exception.ResourceNotFoundException;
+import stockman.model.Provider;
 import stockman.model.User;
 import stockman.payload.UserIdentityAvailability;
 import stockman.payload.UserProfile;
@@ -17,20 +20,12 @@ import stockman.security.CurrentUser;
 import stockman.security.UserPrincipal;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api")
 public class UserController {
 
     @Autowired
     private UserRepository userRepository;
-
-//    @Autowired
-//    private PollRepository pollRepository;
-//
-//    @Autowired
-//    private VoteRepository voteRepository;
-//
-//    @Autowired
-//    private PollService pollService;
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -65,6 +60,10 @@ public class UserController {
 
         return userProfile;
     }
-
+    
+    @GetMapping("/user/{id}")
+	public Optional<User> getUserById(@PathVariable(value = "id") Long userId) {
+			return userRepository.findById(userId);
+	}
 
 }

@@ -34,8 +34,8 @@ public class AddressInfo implements Serializable{
 	private String country;
 	
 	@OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "provider_id", nullable = false)
-	@JsonBackReference
+    @JoinColumn(name = "provider_id")
+	@JsonBackReference(value = "provider-addressInfo")
     private Provider provider;
 	
 

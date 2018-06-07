@@ -52,7 +52,7 @@ public class SupplyController {
 			newSupply.setDescription (supplyResponse.getDescription ());
 			newSupply.setUnitsInStock(supplyResponse.getUnitsInStock());
 			newSupply.setAlertStock(supplyResponse.getAlertStock());
-			newSupply.setOrderRequestList(supplyResponse.getOrderRequestList());
+			newSupply.setRequestList(supplyResponse.getRequestList());
 			return repository.save(newSupply);	
         }
 		

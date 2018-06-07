@@ -9,12 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import stockman.model.Provider;
+import stockman.model.Request;
 import stockman.repository.ProviderRepository;
 
 @RestController
@@ -39,6 +41,11 @@ public class ProviderController {
 	@GetMapping("/provider/{id}")
 	public Optional<Provider> getProviderById(@PathVariable(value = "id") Long providerId) {
 			return repository.findById(providerId);
+	}
+	
+	@PostMapping("/provider")
+	public Provider createProvider(@Valid @RequestBody Provider provider) {
+		return repository.save(provider);
 	}
 	
 	@PutMapping("/provider/{id}")

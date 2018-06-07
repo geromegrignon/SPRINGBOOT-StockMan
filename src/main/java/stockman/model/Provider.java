@@ -1,14 +1,15 @@
 package stockman.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.*;
 
@@ -29,13 +30,17 @@ public class Provider implements Serializable{
 	private Long siret;
 	private String name;
 	
-	@OneToOne(fetch = FetchType.LAZY,
+	@OneToOne(fetch = FetchType.EAGER,
             cascade =  CascadeType.ALL,
             mappedBy = "provider")
     private AddressInfo addressInfo;
 	
 	@OneToMany(fetch = FetchType.EAGER,mappedBy="provider",cascade = CascadeType.ALL)
-	private List<Supply> supplyList = new ArrayList<>();
+	@JsonManagedReference(value="provider-supply")
+	private Set<Supply> supplyList = new HashSet<>();
+	
+	@OneToMany(fetch = FetchType.EAGER,mappedBy="provider",cascade = CascadeType.ALL)
+	private Set<Contact> contactList = new HashSet<>();
 	
 
 }

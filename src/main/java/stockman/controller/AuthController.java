@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import stockman.exception.AppException;
-import stockman.exception.BadRequestException;
 import stockman.model.Role;
 import stockman.model.RoleName;
 import stockman.model.User;
