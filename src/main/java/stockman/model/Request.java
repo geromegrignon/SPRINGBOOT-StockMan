@@ -1,21 +1,28 @@
 package stockman.model;
 
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
+
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.*;
+import stockman.model.audit.DateAudit;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Request {
+@EntityListeners(AuditingEntityListener.class)
+public class Request extends DateAudit {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +36,7 @@ public class Request {
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name="request_id", referencedColumnName ="id", nullable = true)
-	private Set<Status> statusList = new HashSet<Status>();
+	private List<Status> statusList = new ArrayList<Status>();
 	
 	@ManyToOne
 	@JoinColumn(name = "supply_id")

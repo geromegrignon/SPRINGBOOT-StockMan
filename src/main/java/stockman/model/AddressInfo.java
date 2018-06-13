@@ -1,7 +1,5 @@
 package stockman.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -20,7 +18,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class AddressInfo implements Serializable{
+public class AddressInfo {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

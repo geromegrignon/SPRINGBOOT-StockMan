@@ -60,7 +60,7 @@ public class ProviderController {
 			newProvider.setName (providerResponse.getName ());
 			newProvider.setSiret(providerResponse.getSiret());
 			newProvider.setAddressInfo(providerResponse.getAddressInfo());
-			newProvider.setSupplyList(providerResponse.getSupplyList());
+//			newProvider.setSupplyList(providerResponse.getSupplyList());
 			return repository.save(newProvider);	
         }
 		

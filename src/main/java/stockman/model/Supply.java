@@ -1,6 +1,5 @@
 package stockman.model;
 
-import java.io.Serializable;
 import java.util.*;
 
 import javax.persistence.*;
@@ -9,7 +8,6 @@ import javax.validation.constraints.NotNull;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.*;
@@ -20,7 +18,7 @@ import lombok.*;
 @AllArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Supply implements Serializable{
+public class Supply {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

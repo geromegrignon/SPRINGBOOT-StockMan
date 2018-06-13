@@ -11,7 +11,7 @@ import stockman.model.Supply;
 
 
 @Repository
-public interface SupplyRepository extends JpaRepository<Supply, Long>, JpaSpecificationExecutor<Supply>{
+public interface SupplyRepository extends JpaRepository<Supply, Long>{
 	
 	@Query("SELECT s FROM Supply s WHERE s.unitsInStock < s.alertStock")
 	  List<Supply> findOnAlertSupplies();

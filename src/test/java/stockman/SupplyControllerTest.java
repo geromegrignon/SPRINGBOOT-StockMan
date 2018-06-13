@@ -18,10 +18,10 @@ import stockman.controller.SupplyController;
 public class SupplyControllerTest {
 	private MockMvc mockMvc;
 	
-	@InjectMocks
+	@InjectMocks // fichier que l'on teste
 	private SupplyController controller;
 
-	@Mock
+	@Mock // que des interfaces
 	private FavoriteService service;
 	
 	@Before

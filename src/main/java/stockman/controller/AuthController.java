@@ -39,7 +39,7 @@ import java.util.Collections;
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    @Autowired
+	@Autowired
     AuthenticationManager authenticationManager;
 
     @Autowired
@@ -54,10 +54,6 @@ public class AuthController {
     @Autowired
     JwtTokenProvider tokenProvider;
 
-
-    @Value("${app.jwtExpirationInMs}")
-    private long jwtExpirationInMs;
-
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
@@ -70,12 +66,8 @@ public class AuthController {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-
-        String accessToken = tokenProvider.generateToken(userPrincipal);
-        String refreshToken = tokenProvider.generateRefreshToken();
-
-        return ResponseEntity.ok(new JwtAuthenticationResponse(accessToken, refreshToken, jwtExpirationInMs));
+        String jwt = tokenProvider.generateToken(authentication);
+        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
     }
 
 
